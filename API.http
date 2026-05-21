@@ -1,0 +1,101 @@
+### Get all rooms
+GET http://localhost:8083/api/rooms
+
+### Get room by ID (success)
+GET http://localhost:8083/api/rooms/1
+
+### Get room by ID (404)
+GET http://localhost:8083/api/rooms/999
+
+### Create a new room
+POST http://localhost:8083/api/rooms
+Content-Type: application/json
+
+{
+  "name": "Sala F",
+  "capacity": 30,
+  "floor": 2,
+  "available": true
+}
+
+### Update a room
+PUT http://localhost:8083/api/rooms/1
+Content-Type: application/json
+
+{
+  "name": "Sala A - Updated",
+  "capacity": 12,
+  "floor": 1,
+  "available": true
+}
+
+### Update a room (404)
+PUT http://localhost:8083/api/rooms/999
+Content-Type: application/json
+
+{
+  "name": "Not Exists",
+  "capacity": 10,
+  "floor": 1,
+  "available": true
+}
+
+### Delete a room
+DELETE http://localhost:8083/api/rooms/4
+
+### Delete a room (404)
+DELETE http://localhost:8083/api/rooms/999
+
+### Get available rooms
+GET http://localhost:8083/api/rooms/available?date=2026-06-01T10:00:00&minCapacity=10
+
+### Get all reservations
+GET http://localhost:8083/api/reservations
+
+### Get reservation by ID (success)
+GET http://localhost:8083/api/reservations/1
+
+### Get reservation by ID (404)
+GET http://localhost:8083/api/reservations/999
+
+### Get reservations by room ID
+GET http://localhost:8083/api/reservations/room/1
+
+### Create a reservation (success)
+POST http://localhost:8083/api/reservations
+Content-Type: application/json
+
+{
+  "room": { "id": 1 },
+  "reservedBy": "Jan Kowalski",
+  "startTime": "2026-06-01T10:00:00",
+  "endTime": "2026-06-01T11:00:00"
+}
+
+### Create a reservation (409 conflict — same room and time)
+POST http://localhost:8083/api/reservations
+Content-Type: application/json
+
+{
+  "room": { "id": 1 },
+  "reservedBy": "Anna Nowak",
+  "startTime": "2026-06-01T10:00:00",
+  "endTime": "2026-06-01T11:00:00"
+}
+
+### Create a reservation (404 — room not found)
+POST http://localhost:8083/api/reservations
+Content-Type: application/json
+
+{
+  "room": { "id": 999 },
+  "reservedBy": "Piotr Wiśniewski",
+  "startTime": "2026-06-01T12:00:00",
+  "endTime": "2026-06-01T13:00:00"
+}
+
+### Delete a reservation
+DELETE http://localhost:8083/api/reservations/1
+
+### Delete a reservation (404)
+DELETE http://localhost:8083/api/reservations/999
